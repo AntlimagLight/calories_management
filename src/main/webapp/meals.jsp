@@ -4,15 +4,15 @@
 <head>
     <title>Users</title>
     <style type="text/css">
-        TD, TH {
+        td, th {
             padding: 2px;
         }
 
-        TH {
+        th {
             border: 1px solid black;
         }
 
-        TD {
+        td {
             border-bottom: 1px solid black;
         }
     </style>
@@ -24,14 +24,14 @@
 <table>
     <tr>
         <td><b>Наименование</b></td>
-        <td><b>Время</b></td>
+        <td><b>Дата/Время</b></td>
         <td><b>Каллории</b></td>
     </tr>
     <c:forEach var="meal" items="${mealList}">
-        <tr style="color: <c:if test="${meal.isExcess()}">red</c:if><c:if test="${!meal.isExcess()}">green</c:if>">
-            <td>${meal.getDescription()}</td>
-            <td>${meal.getDateTime().toLocalTime()}</td>
-            <td>${meal.getCalories()}</td>
+        <tr style="color: ${meal.isExcess()? 'red': 'green'}">
+            <td>${meal.description}</td>
+            <td>${meal.dateTime.toLocalDate()} ${meal.dateTime.toLocalTime()}</td>
+            <td>${meal.calories}</td>
         </tr>
     </c:forEach>
 </table>
