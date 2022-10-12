@@ -20,9 +20,9 @@ public class MealServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         log.debug("redirect to meals");
-        List<Meal> mealsList = DataInit.getMEALS();
-        request.setAttribute("mealList", MealsUtil.filteredByStreams(mealsList, DataInit.getStartTime(),
-                DataInit.getEndTime(), DataInit.getCALORIESPERDAY()));
+        List<Meal> mealsList = DataInit.getMeals();
+        request.setAttribute("mealList", MealsUtil.filteredByStreams(mealsList, DataInit.START_TIME,
+                DataInit.END_TIME, DataInit.CALORIESPERDAY));
 //        response.sendRedirect("meals.jsp");
         request.getRequestDispatcher("/meals.jsp").forward(request, response);
     }
