@@ -17,7 +17,8 @@ public class Meal extends AbstractBaseEntity {
     private final int userId;
 
     public Meal(LocalDateTime dateTime, String description, int calories) {
-        this(SecurityUtil.authUserId(), dateTime, description, calories);
+        this(1, dateTime, description, calories);
+        //временный конструктор
     }
 
     public Meal(int userId, LocalDateTime dateTime, String description, int calories) {

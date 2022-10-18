@@ -1,20 +1,19 @@
 package ru.javawebinar.topjava.repository;
 
 import ru.javawebinar.topjava.model.Meal;
-import ru.javawebinar.topjava.to.MealTo;
 
-import java.util.Collection;
+import java.util.List;
 
 public interface MealRepository {
     // null if updated meal does not belong to userId
-    Meal save(Meal meal);
+    Meal save(Meal meal, int authUserId);
 
     // false if meal does not belong to userId
-    boolean delete(int id);
+    boolean delete(int id, int authUserId);
 
     // null if meal does not belong to userId
-    Meal get(int id);
+    Meal get(int id, int authUserId);
 
     // ORDERED dateTime desc
-    Collection<MealTo> getAll();
+    List<Meal> getAll(int authUserId);
 }
