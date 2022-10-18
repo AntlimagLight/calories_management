@@ -32,6 +32,7 @@ public class MealServlet extends HttpServlet {
         String id = request.getParameter("id");
 
         Meal meal = new Meal(id.isEmpty() ? null : Integer.valueOf(id),
+                SecurityUtil.authUserId(),
                 LocalDateTime.parse(request.getParameter("dateTime")),
                 request.getParameter("description"),
                 Integer.parseInt(request.getParameter("calories")));
@@ -63,8 +64,7 @@ public class MealServlet extends HttpServlet {
             case "all":
             default:
                 log.info("getAll");
-                request.setAttribute("meals",
-                        MealsUtil. getTos(repository.getAll(), MealsUtil.DEFAULT_CALORIES_PER_DAY));
+                request.setAttribute("meals", repository.getAll());
                 request.getRequestDispatcher("/meals.jsp").forward(request, response);
                 break;
         }
