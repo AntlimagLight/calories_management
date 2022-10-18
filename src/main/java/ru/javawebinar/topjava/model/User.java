@@ -65,10 +65,6 @@ public class User extends AbstractNamedEntity {
         this.caloriesPerDay = caloriesPerDay;
     }
 
-    public boolean isNew() {
-        return id == null;
-    }
-
     public boolean isEnabled() {
         return enabled;
     }
