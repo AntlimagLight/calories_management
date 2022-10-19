@@ -50,10 +50,10 @@ public class MainTest {
                 "Старая Еда", 200), 1);
         testMealRepository.save(new Meal(2,
                 LocalDateTime.of(2022, Month.OCTOBER, 15, 11, 3),
-                "Чужая Еда", 600), 1);
+                "Чужая Еда", 600), 2);
         testMealRepository.save(new Meal(3,
                 LocalDateTime.of(2021, Month.OCTOBER, 15, 9, 3),
-                "Еще чужая Еда", 600), 1);
+                "Еще чужая Еда", 600), 3);
 
         System.out.println("____");
 
