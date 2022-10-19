@@ -7,11 +7,12 @@ import ru.javawebinar.topjava.repository.MealRepository;
 import ru.javawebinar.topjava.repository.UserRepository;
 import ru.javawebinar.topjava.repository.inmemory.InMemoryMealRepository;
 import ru.javawebinar.topjava.repository.inmemory.InMemoryUserRepository;
-import ru.javawebinar.topjava.web.SecurityUtil;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.Month;
-import java.util.Collections;
+import java.util.Map;
+import java.util.concurrent.ConcurrentHashMap;
 
 public class MainTest {
     public static void main(String[] args) {
@@ -29,7 +30,7 @@ public class MainTest {
 
         System.out.println("____");
 
-        System.out.println(testUserRepository.getByEmail("Boris@gmail.com"));
+        System.out.println(testUserRepository.getByEmail("BORis@gmail.com"));
 
         System.out.println("____");
 
@@ -41,32 +42,47 @@ public class MainTest {
         System.out.println("__TEST MEAL REPOSITORY__");
 
         MealRepository testMealRepository = new InMemoryMealRepository();
-        testMealRepository.save(new Meal(SecurityUtil.authUserId(),
+        testMealRepository.save(new Meal(1,
                 LocalDateTime.of(2022, Month.OCTOBER, 18, 12, 3),
-                "Новая Еда", 200), SecurityUtil.authUserId());
-        testMealRepository.save(new Meal(SecurityUtil.authUserId(),
+                "Новая Еда", 200), 1);
+        testMealRepository.save(new Meal(1,
                 LocalDateTime.of(2018, Month.OCTOBER, 12, 12, 0),
-                "Старая Еда", 200), SecurityUtil.authUserId());
+                "Старая Еда", 200), 1);
         testMealRepository.save(new Meal(2,
                 LocalDateTime.of(2022, Month.OCTOBER, 15, 11, 3),
-                "Чужая Еда", 600), SecurityUtil.authUserId());
+                "Чужая Еда", 600), 1);
         testMealRepository.save(new Meal(3,
                 LocalDateTime.of(2021, Month.OCTOBER, 15, 9, 3),
-                "Еще чужая Еда", 600), SecurityUtil.authUserId());
+                "Еще чужая Еда", 600), 1);
 
         System.out.println("____");
 
-        testMealRepository.getAll(SecurityUtil.authUserId()).forEach(System.out::println);
-        testMealRepository.delete(9, SecurityUtil.authUserId());
+        testMealRepository.getAll(1, LocalDate.MIN, LocalDate.MAX).forEach(System.out::println);
+        testMealRepository.delete(9, 1);
+        testMealRepository.delete(10, 1);
 
         System.out.println("____");
 
-        System.out.println(testMealRepository.get(9, SecurityUtil.authUserId()));
-        System.out.println(testMealRepository.get(8, SecurityUtil.authUserId()));
-        testMealRepository.save(new Meal(4, SecurityUtil.authUserId(),
+        System.out.println(testMealRepository.get(9, 1));
+        System.out.println(testMealRepository.get(8, 1));
+        testMealRepository.save(new Meal(4, 1,
                 LocalDateTime.of(2022, Month.OCTOBER, 12, 12, 3),
-                "Обновленная Еда", 200), SecurityUtil.authUserId());
-        testMealRepository.getAll(SecurityUtil.authUserId()).forEach(System.out::println);
+                "Обновленная Еда", 200), 1);
+        testMealRepository.getAll(1, LocalDate.MIN, LocalDate.MAX).forEach(System.out::println);
 
+        System.out.println("____");
+
+        Map<Integer, Map<Integer, String>> bigMap = new ConcurrentHashMap<>();
+        Map<Integer, String> map1 = new ConcurrentHashMap<>();
+        Map<Integer, String> map2 = new ConcurrentHashMap<>();
+        map1.put(1, "объект1.1");
+        map1.put(2, "объект1.2");
+        map2.put(1, "объект2.1");
+        map2.put(2, "объект2.2");
+        bigMap.put(1, map1);
+        bigMap.put(2, map2);
+
+        System.out.println(bigMap);
+        System.out.println(bigMap.get(1).get(2));
     }
 }

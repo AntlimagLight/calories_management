@@ -16,21 +16,16 @@ public class Meal extends AbstractBaseEntity {
 
     private final int userId;
 
-    public Meal(LocalDateTime dateTime, String description, int calories) {
-        this(1, dateTime, description, calories);
-        //временный конструктор
-    }
-
     public Meal(int userId, LocalDateTime dateTime, String description, int calories) {
         this(null, userId, dateTime, description, calories);
     }
 
     public Meal(Integer id, int userId, LocalDateTime dateTime, String description, int calories) {
         super(id);
-        this.userId = userId;
         this.dateTime = dateTime;
         this.description = description;
         this.calories = calories;
+        this.userId = userId;
     }
 
     public int getUserId() {
