@@ -42,22 +42,31 @@ public class MainTest {
         System.out.println("__TEST MEAL REPOSITORY__");
 
         MealRepository testMealRepository = new InMemoryMealRepository();
-        testMealRepository.save(new Meal(1,
+        testMealRepository.save(new Meal(
                 LocalDateTime.of(2022, Month.OCTOBER, 18, 12, 3),
-                "Новая Еда", 200), 1);
-        testMealRepository.save(new Meal(1,
+                "Новая Еда", 200,1), 1);
+        testMealRepository.save(new Meal(
                 LocalDateTime.of(2018, Month.OCTOBER, 12, 12, 0),
-                "Старая Еда", 200), 1);
-        testMealRepository.save(new Meal(2,
+                "Старая Еда", 200, 1), 1);
+        testMealRepository.save(new Meal(
                 LocalDateTime.of(2022, Month.OCTOBER, 15, 11, 3),
-                "Чужая Еда", 600), 2);
-        testMealRepository.save(new Meal(3,
+                "Чужая Еда", 600,2), 2);
+        testMealRepository.save(new Meal(
                 LocalDateTime.of(2021, Month.OCTOBER, 15, 9, 3),
-                "Еще чужая Еда", 600), 3);
+                "Еще чужая Еда", 600,3), 3);
+        testMealRepository.save(new Meal(
+                LocalDateTime.of(2021, Month.OCTOBER, 15, 9, 3),
+                "Больше чужой Еда", 600,3), 3);
+        testMealRepository.save(new Meal(12, LocalDateTime.of(2021, Month.OCTOBER, 15, 9, 3),
+                "Нечестно обновленная еда", 666, 3), 1);
 
         System.out.println("____");
-
+        System.out.println("юзер 1");
         testMealRepository.getAll(1, LocalDate.MIN, LocalDate.MAX).forEach(System.out::println);
+        System.out.println("юзер 2");
+        testMealRepository.getAll(2, LocalDate.MIN, LocalDate.MAX).forEach(System.out::println);
+        System.out.println("юзер 3");
+        testMealRepository.getAll(3, LocalDate.MIN, LocalDate.MAX).forEach(System.out::println);
         testMealRepository.delete(9, 1);
         testMealRepository.delete(10, 1);
 
@@ -65,11 +74,11 @@ public class MainTest {
 
         System.out.println(testMealRepository.get(9, 1));
         System.out.println(testMealRepository.get(8, 1));
-        testMealRepository.save(new Meal(4, 1,
+        testMealRepository.save(new Meal(4,
                 LocalDateTime.of(2022, Month.OCTOBER, 12, 12, 3),
-                "Обновленная Еда", 200), 1);
+                "Обновленная Еда", 200, 1), 1);
         testMealRepository.getAll(1, LocalDate.MIN, LocalDate.MAX).forEach(System.out::println);
-
+        System.out.println("____");
         System.out.println("____");
 
         Map<Integer, Map<Integer, String>> bigMap = new ConcurrentHashMap<>();

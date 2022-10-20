@@ -13,7 +13,9 @@ import java.util.Comparator;
 import java.util.List;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
+import java.util.concurrent.atomic.AtomicBoolean;
 import java.util.concurrent.atomic.AtomicInteger;
+import java.util.function.BiFunction;
 import java.util.stream.Collectors;
 
 @Repository
@@ -30,45 +32,45 @@ public class InMemoryMealRepository implements MealRepository {
 
     @Override
     public Meal save(Meal meal, int userId) {
+
         if (meal.isNew()) {
-            log.info("save meal {}", meal);
             meal.setId(counter.incrementAndGet());
-            if (!repository.containsKey(userId)) {
-                repository.put(userId, new ConcurrentHashMap<>());
+            log.info("save meal {}", meal);
+        }
+        if (userId != meal.getUserId()) {
+            log.warn("wrong meal owner {} != {}", userId, meal.getUserId());
+            return null;
+        }
+        repository.compute(userId, (id, singleUserStorage) -> {
+            if (singleUserStorage == null) {
+                singleUserStorage = new ConcurrentHashMap<>();
             }
-            repository.computeIfPresent(userId, (id, singleUserStorage) -> {
-                singleUserStorage.put(meal.getId(), meal);
-                return singleUserStorage;
+            singleUserStorage.computeIfPresent(meal.getId(), (mealId, oldMeal) -> {
+                log.info("update meal {}", meal);
+                return meal;
             });
-            return meal;
-        }
-        if (userId == repository.get(userId).get(meal.getId()).getUserId()) {
-            log.info("update meal {}", meal);
-            repository.computeIfPresent(userId, (id, singleUserStorage) -> {
-                singleUserStorage.computeIfPresent(meal.getId(), (mealId, oldMeal) -> meal);
-                return singleUserStorage;
-            });
-            return meal;
-        }
-        return null;
+            singleUserStorage.putIfAbsent(meal.getId(), meal);
+            return singleUserStorage;
+        });
+        return meal;
     }
 
     @Override
     public boolean delete(int id, int userId) {
         log.info("delete meal {}", id);
-        Meal meal = repository.get(userId).get(id);
-        if (meal == null) {
-            log.warn("food with given id was not found in the repository");
-            return false;
-        }
-        if (userId == meal.getUserId()) {
-            return repository.computeIfPresent(userId, (uid, singleUserStorage) -> {
-                singleUserStorage.remove(id);
+        repository.compute(userId, (mealId, singleUserStorage) -> {
+            if (singleUserStorage == null) {
+                log.warn("This user has no food {}", userId);
+                return null;
+            }
+            if (!singleUserStorage.containsKey(id)) {
+                log.warn("food with given id was not found {}", id);
                 return singleUserStorage;
-            }) != null;
-        }
-        log.warn("the specified food belongs to another user");
-        return false;
+            }
+            singleUserStorage.remove(id);
+            return singleUserStorage;
+        });
+        return true;
     }
 
     @Override
@@ -79,11 +81,7 @@ public class InMemoryMealRepository implements MealRepository {
             log.warn("food with given id was not found in the repository");
             return null;
         }
-        if (userId == meal.getUserId()) {
-            return meal;
-        }
-        log.warn("the specified food belongs to another user");
-        return null;
+        return meal;
     }
 
     @Override

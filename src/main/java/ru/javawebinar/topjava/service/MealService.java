@@ -35,15 +35,13 @@ public class MealService {
         return checkNotFoundWithId(repository.get(id, userId), id);
     }
 
-    public List<MealTo> getAll(int userId, int CaloriesPerDay) {
-        return MealsUtil.getTos(repository.getAll(userId, LocalDate.MIN, LocalDate.MAX), CaloriesPerDay);
+    public List<MealTo> getAll(int userId, int caloriesPerDay) {
+        return MealsUtil.getTos(repository.getAll(userId, LocalDate.MIN, LocalDate.MAX), caloriesPerDay);
     }
 
-    public List<MealTo> getAllFiltered(int userId, int CaloriesPerDay, LocalDate startDate, LocalDate endDate,
+    public List<MealTo> getAllFiltered(int userId, int caloriesPerDay, LocalDate startDate, LocalDate endDate,
                                        LocalTime startTime, LocalTime endTime) {
-        return MealsUtil.getTos(repository.getAll(userId, startDate, endDate), CaloriesPerDay).stream()
-                .filter(meal -> DateTimeUtil.isBetweenHalfOpen(meal.getDateTime().toLocalTime(), startTime, endTime))
-                .collect(Collectors.toList());
+        return MealsUtil.getFilteredTos(repository.getAll(userId, startDate, endDate), caloriesPerDay,startTime,endTime);
     }
 
     public void update(Meal meal, int userId) {
