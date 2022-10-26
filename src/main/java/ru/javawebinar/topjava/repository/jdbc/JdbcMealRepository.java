@@ -50,8 +50,8 @@ public class JdbcMealRepository implements MealRepository {
                             "UPDATE meals " +
                             "   SET description=:description, calories=:calories, datetime=:datetime " +
                             " WHERE id=:id " +
-                            "   AND user_id=:user_id"
-                    , map) == 0) {
+                            "   AND user_id=:user_id",
+                    map) == 0) {
                 return null;
             }
         }
@@ -62,16 +62,16 @@ public class JdbcMealRepository implements MealRepository {
     public boolean delete(int id, int userId) {
         return jdbcTemplate.update("DELETE FROM meals " +
                         "WHERE id=?" +
-                        " AND user_id=?"
-                , id, userId) != 0;
+                        " AND user_id=?",
+                id, userId) != 0;
     }
 
     @Override
     public Meal get(int id, int userId) {
         List<Meal> meals = jdbcTemplate.query(
                 "SELECT * FROM meals " +
-                        "    WHERE id = ? AND user_id = ?"
-                , ROW_MAPPER, id, userId);
+                        "    WHERE id = ? AND user_id = ?",
+                ROW_MAPPER, id, userId);
         return DataAccessUtils.singleResult(meals);
     }
 
@@ -89,7 +89,7 @@ public class JdbcMealRepository implements MealRepository {
                 "   SELECT * FROM" +
                         " meals WHERE user_id=? AND datetime " +
                         "     BETWEEN ? AND ? " +
-                        "    ORDER BY datetime DESC"
-                , ROW_MAPPER, userId, startDateTime, endDateTime);
+                        "    ORDER BY datetime DESC",
+                ROW_MAPPER, userId, startDateTime, endDateTime);
     }
 }
