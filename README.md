@@ -1,7 +1,7 @@
+[![Codacy Badge](https://app.codacy.com/project/badge/Grade/97d8f5cc6c2b48f5985827088b7f96b4)](https://www.codacy.com/gh/AntlimagLight/topjava/dashboard?utm_source=github.com&amp;utm_medium=referral&amp;utm_content=AntlimagLight/topjava&amp;utm_campaign=Badge_Grade)
+
 Java Enterprise Online Project
 ===============================
-
-[![Codacy Badge](https://app.codacy.com/project/badge/Grade/97d8f5cc6c2b48f5985827088b7f96b4)](https://www.codacy.com/gh/AntlimagLight/topjava/dashboard?utm_source=github.com&amp;utm_medium=referral&amp;utm_content=AntlimagLight/topjava&amp;utm_campaign=Badge_Grade)
 
 Наиболее востребованные технологии /инструменты / фреймворки Java Enterprise:
 Maven/ Spring/ Security/ JPA(Hibernate)/ REST(Jackson)/ Bootstrap(CSS)/ jQuery + plugins.
