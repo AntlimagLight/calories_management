@@ -37,6 +37,9 @@ public class MealServiceTest {
     private static final Logger log = LoggerFactory.getLogger(MealServiceTest.class);
     private static final StringBuilder results = new StringBuilder();
 
+    @Autowired
+    private MealService service;
+
     @Rule
     public Stopwatch stopwatch = new Stopwatch() {
         @Override
@@ -47,6 +50,7 @@ public class MealServiceTest {
         }
     };
 
+
     @AfterClass
     public static void printResult() {
         log.info("\nAll Test Duration" +
@@ -54,9 +58,6 @@ public class MealServiceTest {
                 "\nTest                              Duration, ms" +
                 results);
     }
-
-    @Autowired
-    private MealService service;
 
     @Test
     public void delete() {
