@@ -13,8 +13,6 @@ import java.util.List;
 @Repository
 public class DataJpaMealRepository implements MealRepository {
 
-    private static final Sort SORT_NAME_EMAIL = Sort.by(Sort.Direction.ASC, "name", "email");
-
     private final CrudMealRepository crudMealRepository;
     private final CrudUserRepository crudRepository;
 

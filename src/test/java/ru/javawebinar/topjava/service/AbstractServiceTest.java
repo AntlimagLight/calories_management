@@ -2,7 +2,6 @@ package ru.javawebinar.topjava.service;
 
 import org.junit.AfterClass;
 import org.junit.Rule;
-import org.junit.rules.ExpectedException;
 import org.junit.rules.Stopwatch;
 import org.junit.runner.Description;
 
@@ -27,13 +26,10 @@ import static org.slf4j.LoggerFactory.getLogger;
 @RunWith(SpringJUnit4ClassRunner.class)
 @ActiveProfiles(resolver = ActiveDbProfileResolver.class)
 @Sql(scripts = "classpath:db/populateDB.sql", config = @SqlConfig(encoding = "UTF-8"))
-public class AbstractServiceTest {
+public abstract class AbstractServiceTest {
     private static final Logger log = getLogger("result");
 
     private static StringBuilder results = new StringBuilder();
-
-    @Rule
-    public ExpectedException thrown = ExpectedException.none();
 
     @Rule
     public Stopwatch stopwatch = new Stopwatch() {
