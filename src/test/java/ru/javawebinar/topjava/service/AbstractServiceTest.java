@@ -32,16 +32,13 @@ public abstract class AbstractServiceTest {
     public static ExternalResource summary = TimingRules.SUMMARY;
 
     @Autowired
-    public Environment env;
-
-    public boolean isJpaBased() {
-        return env.acceptsProfiles(org.springframework.core.env.Profiles.of(Profiles.JPA, Profiles.DATAJPA));
-    }
+    private Environment env;
 
     @Rule
     public Stopwatch stopwatch = TimingRules.STOPWATCH;
 
     //  Check root cause in JUnit: https://github.com/junit-team/junit4/pull/778
+
     protected <T extends Throwable> void validateRootCause(Class<T> rootExceptionClass, Runnable runnable) {
         assertThrows(rootExceptionClass, () -> {
             try {
@@ -50,5 +47,8 @@ public abstract class AbstractServiceTest {
                 throw getRootCause(e);
             }
         });
+    }
+    protected boolean isJpaBased() {
+        return env.acceptsProfiles(org.springframework.core.env.Profiles.of(Profiles.JPA, Profiles.DATAJPA));
     }
 }

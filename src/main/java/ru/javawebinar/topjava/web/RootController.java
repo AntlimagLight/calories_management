@@ -16,7 +16,7 @@ import javax.servlet.http.HttpServletRequest;
 @Controller
 public class RootController {
     private static final Logger log = LoggerFactory.getLogger(RootController.class);
-
+    @Autowired
     private UserService userService;
     @Autowired
     private MealService mealService;
