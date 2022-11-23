@@ -48,6 +48,7 @@ public abstract class AbstractServiceTest {
             }
         });
     }
+
     protected boolean isJpaBased() {
         return env.acceptsProfiles(org.springframework.core.env.Profiles.of(Profiles.JPA, Profiles.DATAJPA));
     }
