@@ -7,7 +7,7 @@ import ru.javawebinar.topjava.model.Meal;
 
 import java.util.List;
 
-import static ru.javawebinar.topjava.MealTestData.*;
+import static ru.javawebinar.topjava.web.testdata.MealTestData.*;
 
 class JsonUtilTest {
     private static final Logger log = LoggerFactory.getLogger(JsonUtilTest.class);

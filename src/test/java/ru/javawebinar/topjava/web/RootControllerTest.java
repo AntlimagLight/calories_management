@@ -9,8 +9,8 @@ import java.util.List;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
-import static ru.javawebinar.topjava.MealTestData.meals;
-import static ru.javawebinar.topjava.UserTestData.*;
+import static ru.javawebinar.topjava.web.testdata.MealTestData.meals;
+import static ru.javawebinar.topjava.web.testdata.UserTestData.*;
 import static ru.javawebinar.topjava.util.MealsUtil.getTos;
 
 

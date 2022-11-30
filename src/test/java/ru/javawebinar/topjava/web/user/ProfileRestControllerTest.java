@@ -12,7 +12,7 @@ import ru.javawebinar.topjava.web.json.JsonUtil;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
-import static ru.javawebinar.topjava.UserTestData.*;
+import static ru.javawebinar.topjava.web.testdata.UserTestData.*;
 import static ru.javawebinar.topjava.web.user.ProfileRestController.REST_URL;
 
 class ProfileRestControllerTest extends AbstractControllerTest {

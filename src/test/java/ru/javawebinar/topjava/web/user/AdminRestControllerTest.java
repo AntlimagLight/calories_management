@@ -5,7 +5,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.ResultActions;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
-import ru.javawebinar.topjava.UserTestData;
+import ru.javawebinar.topjava.web.testdata.UserTestData;
 import ru.javawebinar.topjava.model.User;
 import ru.javawebinar.topjava.service.UserService;
 import ru.javawebinar.topjava.util.exception.NotFoundException;
@@ -16,18 +16,18 @@ import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
-import static ru.javawebinar.topjava.UserTestData.*;
+import static ru.javawebinar.topjava.web.testdata.UserTestData.*;
 
 class AdminRestControllerTest extends AbstractControllerTest {
 
-    private static final String REST_URL = AdminRestController.REST_URL + '/';
+    private static final String REST_USER_URL = AdminRestController.REST_USER_URL + '/';
 
     @Autowired
     private UserService userService;
 
     @Test
     void get() throws Exception {
-        perform(MockMvcRequestBuilders.get(REST_URL + ADMIN_ID))
+        perform(MockMvcRequestBuilders.get(REST_USER_URL + ADMIN_ID))
                 .andExpect(status().isOk())
                 .andDo(print())
                 // https://jira.spring.io/browse/SPR-14472
@@ -37,7 +37,7 @@ class AdminRestControllerTest extends AbstractControllerTest {
 
     @Test
     void getByEmail() throws Exception {
-        perform(MockMvcRequestBuilders.get(REST_URL + "by-email?email=" + user.getEmail()))
+        perform(MockMvcRequestBuilders.get(REST_USER_URL + "by-email?email=" + user.getEmail()))
                 .andExpect(status().isOk())
                 .andExpect(content().contentTypeCompatibleWith(MediaType.APPLICATION_JSON))
                 .andExpect(USER_MATCHER.contentJson(user));
@@ -45,7 +45,7 @@ class AdminRestControllerTest extends AbstractControllerTest {
 
     @Test
     void delete() throws Exception {
-        perform(MockMvcRequestBuilders.delete(REST_URL + USER_ID))
+        perform(MockMvcRequestBuilders.delete(REST_USER_URL + USER_ID))
                 .andDo(print())
                 .andExpect(status().isNoContent());
         assertThrows(NotFoundException.class, () -> userService.get(USER_ID));
@@ -54,7 +54,7 @@ class AdminRestControllerTest extends AbstractControllerTest {
     @Test
     void update() throws Exception {
         User updated = UserTestData.getUpdated();
-        perform(MockMvcRequestBuilders.put(REST_URL + USER_ID)
+        perform(MockMvcRequestBuilders.put(REST_USER_URL + USER_ID)
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(JsonUtil.writeValue(updated)))
                 .andExpect(status().isNoContent());
@@ -65,7 +65,7 @@ class AdminRestControllerTest extends AbstractControllerTest {
     @Test
     void createWithLocation() throws Exception {
         User newUser = UserTestData.getNew();
-        ResultActions action = perform(MockMvcRequestBuilders.post(REST_URL)
+        ResultActions action = perform(MockMvcRequestBuilders.post(REST_USER_URL)
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(JsonUtil.writeValue(newUser)))
                 .andExpect(status().isCreated());
@@ -79,7 +79,7 @@ class AdminRestControllerTest extends AbstractControllerTest {
 
     @Test
     void getAll() throws Exception {
-        perform(MockMvcRequestBuilders.get(REST_URL))
+        perform(MockMvcRequestBuilders.get(REST_USER_URL))
                 .andExpect(status().isOk())
                 .andExpect(content().contentTypeCompatibleWith(MediaType.APPLICATION_JSON))
                 .andExpect(USER_MATCHER.contentJson(admin, guest, user));

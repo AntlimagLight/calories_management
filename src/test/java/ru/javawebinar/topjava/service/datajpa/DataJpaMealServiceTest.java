@@ -3,14 +3,14 @@ package ru.javawebinar.topjava.service.datajpa;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.springframework.test.context.ActiveProfiles;
-import ru.javawebinar.topjava.MealTestData;
+import ru.javawebinar.topjava.web.testdata.MealTestData;
 import ru.javawebinar.topjava.model.Meal;
 import ru.javawebinar.topjava.service.AbstractMealServiceTest;
 import ru.javawebinar.topjava.util.exception.NotFoundException;
 
-import static ru.javawebinar.topjava.MealTestData.*;
+import static ru.javawebinar.topjava.web.testdata.MealTestData.*;
 import static ru.javawebinar.topjava.Profiles.DATAJPA;
-import static ru.javawebinar.topjava.UserTestData.*;
+import static ru.javawebinar.topjava.web.testdata.UserTestData.*;
 
 @ActiveProfiles(DATAJPA)
 class DataJpaMealServiceTest extends AbstractMealServiceTest {

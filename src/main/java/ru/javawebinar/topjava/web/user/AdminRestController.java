@@ -11,10 +11,10 @@ import java.net.URI;
 import java.util.List;
 
 @RestController
-@RequestMapping(value = AdminRestController.REST_URL, produces = MediaType.APPLICATION_JSON_VALUE)
+@RequestMapping(value = AdminRestController.REST_USER_URL, produces = MediaType.APPLICATION_JSON_VALUE)
 public class AdminRestController extends AbstractUserController {
 
-    static final String REST_URL = "/rest/admin/users";
+    static final String REST_USER_URL = "/rest/admin/users";
 
     @Override
     @GetMapping
@@ -32,7 +32,7 @@ public class AdminRestController extends AbstractUserController {
     public ResponseEntity<User> createWithLocation(@RequestBody User user) {
         User created = super.create(user);
         URI uriOfNewResource = ServletUriComponentsBuilder.fromCurrentContextPath()
-                .path(REST_URL + "/{id}")
+                .path(REST_USER_URL + "/{id}")
                 .buildAndExpand(created.getId()).toUri();
         return ResponseEntity.created(uriOfNewResource).body(created);
     }
