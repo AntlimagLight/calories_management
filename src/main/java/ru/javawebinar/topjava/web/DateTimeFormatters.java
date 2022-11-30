@@ -1,4 +1,4 @@
-package ru.javawebinar.topjava.util;
+package ru.javawebinar.topjava.web;
 
 import org.springframework.format.Formatter;
 
@@ -19,8 +19,8 @@ public class DateTimeFormatters {
         }
 
         @Override
-        public String print(LocalDate lt, Locale locale) {
-            return lt.format(DateTimeFormatter.ISO_LOCAL_DATE);
+        public String print(LocalDate ld, Locale locale) {
+            return ld.format(DateTimeFormatter.ISO_LOCAL_DATE);
         }
     }
 

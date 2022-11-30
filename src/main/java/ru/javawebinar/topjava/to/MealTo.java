@@ -27,10 +27,6 @@ public class MealTo {
     public MealTo() {
     }
 
-    public MealTo(Meal meal, boolean excess) {
-        this(meal.getId(), meal.getDateTime(), meal.getDescription(), meal.getCalories(), excess);
-    }
-
     public Integer getId() {
         return id;
     }

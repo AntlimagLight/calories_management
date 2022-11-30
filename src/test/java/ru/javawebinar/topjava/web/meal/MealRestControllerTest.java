@@ -29,7 +29,7 @@ class MealRestControllerTest extends AbstractControllerTest {
     private MealService mealService;
 
     @Test
-    void testGet() throws Exception {
+    void Get() throws Exception {
         perform(MockMvcRequestBuilders.get(REST_MEAL_URL + MEAL1_ID))
                 .andExpect(status().isOk())
                 .andDo(print())
@@ -38,14 +38,14 @@ class MealRestControllerTest extends AbstractControllerTest {
     }
 
     @Test
-    void testDelete() throws Exception {
+    void Delete() throws Exception {
         perform(MockMvcRequestBuilders.delete(REST_MEAL_URL + MEAL1_ID))
                 .andExpect(status().isNoContent());
         assertThrows(NotFoundException.class, () -> mealService.get(MEAL1_ID, USER_ID));
     }
 
     @Test
-    void testUpdate() throws Exception {
+    void Update() throws Exception {
         Meal updated = MealTestData.getUpdated();
         perform(MockMvcRequestBuilders.put(REST_MEAL_URL + MEAL1_ID)
                 .contentType(MediaType.APPLICATION_JSON)
@@ -56,7 +56,7 @@ class MealRestControllerTest extends AbstractControllerTest {
     }
 
     @Test
-    void testCreate() throws Exception {
+    void Create() throws Exception {
         Meal newMeal = MealTestData.getNew();
         ResultActions action = perform(MockMvcRequestBuilders.post(REST_MEAL_URL)
                 .contentType(MediaType.APPLICATION_JSON)
@@ -75,23 +75,23 @@ class MealRestControllerTest extends AbstractControllerTest {
                 .andExpect(status().isOk())
                 .andDo(print())
                 .andExpect(content().contentTypeCompatibleWith(MediaType.APPLICATION_JSON))
-                .andExpect(MEALTO_MATCHER.contentJson(MealsUtil.getTos(meals, user.getCaloriesPerDay())));
+                .andExpect(MEAL_TO_MATCHER.contentJson(MealsUtil.getTos(meals, user.getCaloriesPerDay())));
     }
 
     @Test
-    void testFilter() throws Exception {
+    void Filter() throws Exception {
         perform(MockMvcRequestBuilders.get(REST_MEAL_URL + "filter")
                 .param("startDate", "2020-01-30").param("startTime", "07:00")
                 .param("endDate", "2020-01-31").param("endTime", "14:00"))
                 .andExpect(status().isOk())
                 .andDo(print())
-                .andExpect(MEALTO_MATCHER.contentJson(mealsBetween));
+                .andExpect(MEAL_TO_MATCHER.contentJson(mealsBetween));
     }
 
     @Test
-    void testFilterAll() throws Exception {
+    void FilterAll() throws Exception {
         perform(MockMvcRequestBuilders.get(REST_MEAL_URL + "filter?startDate=&endTime="))
                 .andExpect(status().isOk())
-                .andExpect(MEALTO_MATCHER.contentJson(MealsUtil.getTos(meals, user.getCaloriesPerDay())));
+                .andExpect(MEAL_TO_MATCHER.contentJson(MealsUtil.getTos(meals, user.getCaloriesPerDay())));
     }
 }
