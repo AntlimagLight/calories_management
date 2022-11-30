@@ -29,7 +29,8 @@ public class MealTestData {
     public static final Meal adminMeal2 = new Meal(ADMIN_MEAL_ID + 1, of(2020, Month.JANUARY, 31, 21, 0), "Админ ужин", 1500);
 
     public static final List<Meal> meals = List.of(meal7, meal6, meal5, meal4, meal3, meal2, meal1);
-    public static final List<Meal> mealsBetween = List.of(meal6, meal5, meal2, meal1);
+    public static final List<MealTo> mealsBetween = List.of(new MealTo(meal6, true), new MealTo(meal5, true), new MealTo(meal2, false), new MealTo(meal1, false));
+
     // 30.01.2020 7:00 -> 31.01.2020 14:00
 
     public static Meal getNew() {
