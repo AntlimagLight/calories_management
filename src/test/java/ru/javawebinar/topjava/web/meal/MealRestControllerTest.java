@@ -29,7 +29,7 @@ class MealRestControllerTest extends AbstractControllerTest {
     private MealService mealService;
 
     @Test
-    void Get() throws Exception {
+    void get() throws Exception {
         perform(MockMvcRequestBuilders.get(REST_MEAL_URL + MEAL1_ID))
                 .andExpect(status().isOk())
                 .andDo(print())
@@ -38,14 +38,14 @@ class MealRestControllerTest extends AbstractControllerTest {
     }
 
     @Test
-    void Delete() throws Exception {
+    void delete() throws Exception {
         perform(MockMvcRequestBuilders.delete(REST_MEAL_URL + MEAL1_ID))
                 .andExpect(status().isNoContent());
         assertThrows(NotFoundException.class, () -> mealService.get(MEAL1_ID, USER_ID));
     }
 
     @Test
-    void Update() throws Exception {
+    void update() throws Exception {
         Meal updated = MealTestData.getUpdated();
         perform(MockMvcRequestBuilders.put(REST_MEAL_URL + MEAL1_ID)
                 .contentType(MediaType.APPLICATION_JSON)
@@ -56,7 +56,7 @@ class MealRestControllerTest extends AbstractControllerTest {
     }
 
     @Test
-    void Create() throws Exception {
+    void create() throws Exception {
         Meal newMeal = MealTestData.getNew();
         ResultActions action = perform(MockMvcRequestBuilders.post(REST_MEAL_URL)
                 .contentType(MediaType.APPLICATION_JSON)
@@ -79,7 +79,7 @@ class MealRestControllerTest extends AbstractControllerTest {
     }
 
     @Test
-    void Filter() throws Exception {
+    void filter() throws Exception {
         perform(MockMvcRequestBuilders.get(REST_MEAL_URL + "filter")
                 .param("startDate", "2020-01-30").param("startTime", "07:00")
                 .param("endDate", "2020-01-31").param("endTime", "14:00"))
@@ -89,7 +89,7 @@ class MealRestControllerTest extends AbstractControllerTest {
     }
 
     @Test
-    void FilterAll() throws Exception {
+    void filterAll() throws Exception {
         perform(MockMvcRequestBuilders.get(REST_MEAL_URL + "filter?startDate=&endTime="))
                 .andExpect(status().isOk())
                 .andExpect(MEAL_TO_MATCHER.contentJson(MealsUtil.getTos(meals, user.getCaloriesPerDay())));

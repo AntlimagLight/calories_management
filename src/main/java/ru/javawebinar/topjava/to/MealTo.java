@@ -1,7 +1,5 @@
 package ru.javawebinar.topjava.to;
 
-import ru.javawebinar.topjava.model.Meal;
-
 import java.time.LocalDateTime;
 import java.util.Objects;
 
